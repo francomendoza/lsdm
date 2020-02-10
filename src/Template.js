@@ -2,6 +2,8 @@ import React from "react";
 import { createAndViewTemplateInstance } from "./actions/templateActions";
 import "./Template.css";
 import { connect } from "react-redux";
+import { createTemplateInstance } from "./api/templateInstances";
+import { navigate } from "@reach/router";
 
 const TemplateProperty = props => {
   return (
@@ -26,13 +28,11 @@ let TemplateRelation = props => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    setVisibleTemplate: () =>
-      dispatch(
-        createAndViewTemplateInstance(
-          ownProps.templateId,
-          ownProps.parentTemplateId
-        )
-      )
+    setVisibleTemplate: () => {
+      let templateInstance = createTemplateInstance(ownProps.templateId);
+      dispatch(createAndViewTemplateInstance(templateInstance));
+      navigate(`/template_instances/${templateInstance.id}`);
+    }
   };
 };
 

@@ -16,7 +16,7 @@ templateInstancesById: {
 function visibleTemplateInstanceId(state = 1, action) {
   switch (action.type) {
     case "NEW_TEMPLATE_INSTANCE":
-      return action.templateInstanceId;
+      return action.templateInstance.id;
     default:
       return state;
   }
@@ -25,13 +25,10 @@ function visibleTemplateInstanceId(state = 1, action) {
 function templateInstancesById(state = {}, action) {
   switch (action.type) {
     case "NEW_TEMPLATE_INSTANCE":
-      let templateInstance = {
-        id: action.templateInstanceId,
-        templateId: action.templateId,
-        propertyValues: [],
-        relatedTemplateIds: []
+      return {
+        ...state,
+        [action.templateInstance.id]: action.templateInstance
       };
-      return { ...state, [action.templateInstanceId]: templateInstance };
     default:
       return {
         1: {
@@ -47,7 +44,7 @@ function templateInstancesById(state = {}, action) {
 function templateGraphPath(state = [], action) {
   switch (action.type) {
     case "NEW_TEMPLATE_INSTANCE":
-      let path = [...state, action.parentTemplateInstanceId];
+      let path = [...state, action.templateInstance.id];
 
       return path;
     default:
@@ -112,9 +109,14 @@ function templatesById(state = {}, action) {
   };
 }
 
+function templateIds(state = [], action) {
+  return [1, 2];
+}
+
 export default combineReducers({
   visibleTemplateInstanceId,
   templateInstancesById,
   templatesById,
+  templateIds,
   templateGraphPath
 });

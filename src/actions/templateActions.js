@@ -1,11 +1,6 @@
-export const createAndViewTemplateInstance = (
-  templateId,
-  parentTemplateInstanceId
-) => {
+export const createAndViewTemplateInstance = templateInstance => {
   return {
     type: "NEW_TEMPLATE_INSTANCE",
-    templateId,
-    templateInstanceId: new Date().toISOString(),
-    parentTemplateInstanceId
+    templateInstance
   };
 };
