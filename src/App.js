@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import Template from "./Template";
+import { connect } from "react-redux";
+import TemplateNavigator from "./TemplateNavigator";
 
-function App() {
+function App(props) {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <header className="App-header"></header>
+      <div className="App-container">
+        <TemplateNavigator templateGraphPath={props.templateGraphPath} />
+        <Template {...props.template} />
+      </div>
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  let templateInstance =
+    state.templateInstancesById[state.visibleTemplateInstanceId];
+  return {
+    templateInstance,
+    template: state.templatesById[templateInstance.templateId],
+    templateGraphPath: state.templateGraphPath.map(templateId => {
+      let template = state.templatesById[templateId];
+      return {
+        id: templateId,
+        name: template.name
+      };
+    })
+  };
+};
+
+export default connect(mapStateToProps)(App);
