@@ -1,27 +1,5 @@
 import { combineReducers } from "redux";
 
-/*
-templatesById:
-templateInstancesById: {
-  1: {
-    id: 1,
-    templateId: 1,
-    propertyValues: [],
-    relatedTemplateIds: []
-  }
-}
-
- */
-
-function visibleTemplateInstanceId(state = 1, action) {
-  switch (action.type) {
-    case "NEW_TEMPLATE_INSTANCE":
-      return action.templateInstance.id;
-    default:
-      return state;
-  }
-}
-
 function templateInstancesById(state = {}, action) {
   switch (action.type) {
     case "NEW_TEMPLATE_INSTANCE":
@@ -30,14 +8,7 @@ function templateInstancesById(state = {}, action) {
         [action.templateInstance.id]: action.templateInstance
       };
     default:
-      return {
-        1: {
-          id: 1,
-          templateId: 1,
-          propertyValues: [],
-          relatedTemplateIds: []
-        }
-      };
+      return state;
   }
 }
 
@@ -114,7 +85,6 @@ function templateIds(state = [], action) {
 }
 
 export default combineReducers({
-  visibleTemplateInstanceId,
   templateInstancesById,
   templatesById,
   templateIds,

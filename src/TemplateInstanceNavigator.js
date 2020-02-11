@@ -3,7 +3,7 @@ import { Link } from "@reach/router";
 
 const TemplateInstanceNavigator = props => {
   return (
-    <nav className="">
+    <nav>
       <ol>
         {props.templateGraphPath.map(node => {
           return <Breadcrumb templateInstance={node} />;

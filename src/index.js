@@ -7,7 +7,20 @@ import { Provider } from "react-redux";
 import { createStore } from "redux";
 import rootReducer from "./reducers";
 
-const store = createStore(rootReducer);
+function initializeState() {
+  let templateInstances =
+    JSON.parse(sessionStorage.getItem("templateInstances")) || [];
+  let templateInstancesById = templateInstances.reduce(
+    (memo, templateInstance) => {
+      memo[templateInstance.id] = templateInstance;
+      return memo;
+    },
+    {}
+  );
+  return { templateInstancesById };
+}
+
+const store = createStore(rootReducer, initializeState());
 
 ReactDOM.render(
   <Provider store={store}>
