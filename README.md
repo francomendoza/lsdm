@@ -8,7 +8,8 @@ backward as you're working.
 TODOs:
 
 [x] Add a search page for all available templates
-[x] Add navigation between templates
+[] Add navigation between templates including removing breadcrumbs when navigating
+away from page
 [] Add ability to customize template by adding more properties and related nodes
 [] Add some sort of dropbox paper functionality where you can change order of
 properties and related nodes, add notes in between
