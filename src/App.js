@@ -24,7 +24,7 @@ let TemplateInstanceViewer = props => {
   return (
     <div>
       <TemplateInstanceNavigator templateGraphPath={props.templateGraphPath} />
-      <Template {...props.template} />
+      <Template {...props.template} templateInstance={props.templateInstance} />
     </div>
   );
 };

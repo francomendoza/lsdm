@@ -1,18 +1,23 @@
 This is an experimental UI for lab notebooking, where data collection is needs
 a flexible schema.
 
+Templates serve as schemas for a node in a graph. You can generate a node (or template instance)
+from any template. As you are creating a new Template instance, you can connect it to either exisitng nodes/instances or create new ones. You should be able to easily traverse the graph forward and
+backward as you're working.
+
 TODOs:
 
-- Add a search page for all available templates
-- Add navigation between templates
-- Add ability to customize template by adding more properties and related nodes
-- Add some sort of dropbox paper functionality where you can change order of
-  properties and related nodes, add notes in between
-- Add colloborator functionality, so see what other users are currently editing
-- Add deep linking for property values to refer to property values on other nodes
-- On creation of related node, remove the option to create again, instead add a
-  placeholder with some data, and ability to 'x' it out
-- Persist created TemplateInstances to localstorage to avoid refresh errors
+[x] Add a search page for all available templates
+[x] Add navigation between templates
+[] Add ability to customize template by adding more properties and related nodes
+[] Add some sort of dropbox paper functionality where you can change order of
+properties and related nodes, add notes in between
+[] Add colloborator functionality, so see what other users are currently editing
+[] Add deep linking for property values to refer to property values on other nodes
+[] On creation of related node, remove the option to create again, instead add a
+placeholder with some data, and ability to 'x' it out
+[x] Persist created TemplateInstances to localstorage to avoid refresh errors
+[] Fix bug where navigation disappears after refresh
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

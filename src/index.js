@@ -6,18 +6,18 @@ import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import rootReducer from "./reducers";
+import templates from "./api/templates";
 
 function initializeState() {
-  let templateInstances =
-    JSON.parse(sessionStorage.getItem("templateInstances")) || [];
-  let templateInstancesById = templateInstances.reduce(
-    (memo, templateInstance) => {
-      memo[templateInstance.id] = templateInstance;
-      return memo;
-    },
-    {}
-  );
-  return { templateInstancesById };
+  let templateInstancesById =
+    JSON.parse(sessionStorage.getItem("templateInstancesById")) || {};
+  let templatesById = {};
+  let templateIds = [];
+  templates.forEach(template => {
+    templatesById[template.id] = template;
+    templateIds.push(template.id);
+  });
+  return { templateInstancesById, templateIds, templatesById };
 }
 
 const store = createStore(rootReducer, initializeState());

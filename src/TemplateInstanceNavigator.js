@@ -6,7 +6,7 @@ const TemplateInstanceNavigator = props => {
     <nav>
       <ol>
         {props.templateGraphPath.map(node => {
-          return <Breadcrumb templateInstance={node} />;
+          return <Breadcrumb key={node.id} templateInstance={node} />;
         })}
       </ol>
     </nav>
@@ -15,7 +15,7 @@ const TemplateInstanceNavigator = props => {
 
 const Breadcrumb = props => {
   return (
-    <li key={props.templateInstance.id}>
+    <li>
       <Link to={`/template_instances/${props.templateInstance.id}`}>
         <span>{props.templateInstance.name}</span>
       </Link>

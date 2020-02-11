@@ -11,11 +11,11 @@ export function createTemplateInstance(templateId) {
 }
 
 function storeInSession(templateInstance) {
-  let templateInstances =
-    JSON.parse(sessionStorage.getItem("templateInstances")) || [];
-  templateInstances.push(templateInstance);
+  let templateInstancesById =
+    JSON.parse(sessionStorage.getItem("templateInstancesById")) || {};
+  templateInstancesById[templateInstance.id] = templateInstance;
   sessionStorage.setItem(
-    "templateInstances",
-    JSON.stringify(templateInstances)
+    "templateInstancesById",
+    JSON.stringify(templateInstancesById)
   );
 }
