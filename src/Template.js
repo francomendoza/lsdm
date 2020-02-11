@@ -45,7 +45,7 @@ const Template = props => {
       <h4>Properties:</h4>
       <div>
         {props.properties.map(property => {
-          return <TemplateProperty key={property.name} {...property} />;
+          return <TemplateProperty key={props.templateInstance.id + property.name} {...property} />;
         })}
       </div>
       <h4>Related Nodes:</h4>
