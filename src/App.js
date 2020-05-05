@@ -12,11 +12,12 @@ import {
 } from "react-router-dom";
 import TemplateSearch from "./TemplateSearch";
 import { updatePropertyValues } from "./actions/templateActions";
+import styled from "styled-components";
 
 function App(props) {
   return (
     <div className="App">
-      <header className="App-header"></header>
+      <Header></Header>
       <div className="App-container">
         <BrowserRouter>
           <Routes>
@@ -31,6 +32,17 @@ function App(props) {
     </div>
   );
 }
+
+const Header = styled.header`
+  background-color: #8eb69b;
+  min-height: 5vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+`;
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
