@@ -3,29 +3,30 @@ import { connect } from "react-redux";
 import { createAndViewTemplateInstance } from "./actions/templateActions";
 import { createTemplateInstance } from "./api/templateInstances";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
-const TemplateSearch = props => {
+const TemplateSearch = (props) => {
   let [query, updateQuery] = useState("");
-
+  const navigate = useNavigate();
   return (
     <div>
       <Search
         type="text"
         value={query}
-        onChange={event => updateQuery(event.target.value)}
+        onChange={(event) => updateQuery(event.target.value)}
       />
       {props.templateIds
-        .filter(id =>
+        .filter((id) =>
           props.templatesById[id].name.toLowerCase().includes(query)
         )
-        .map(templateId => {
+        .map((templateId) => {
           return (
             <Result
               key={templateId}
               onClick={() => {
                 let templateInstance = createTemplateInstance(templateId);
                 props.dispatch(createAndViewTemplateInstance(templateInstance));
-                props.navigate(`template_instances/${templateInstance.id}`);
+                navigate(`template_instances/${templateInstance.id}`);
               }}
             >
               {props.templatesById[templateId].name}
@@ -50,10 +51,10 @@ const Result = styled.div`
   }
 `;
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     templateIds: state.templateIds,
-    templatesById: state.templatesById
+    templatesById: state.templatesById,
   };
 };
 
