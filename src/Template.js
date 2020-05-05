@@ -4,22 +4,31 @@ import "./Template.css";
 import { connect } from "react-redux";
 import { createTemplateInstance } from "./api/templateInstances";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import Input from "./components/Input";
 
 const TemplateProperty = (props) => {
   return (
-    <div className="template-property-container">
-      <div className="template-property-name">{props.name}</div>
+    <TemplatePropertyContainer>
+      <TemplatePropertyName>{props.name}</TemplatePropertyName>
       <div>
-        <input
+        <Input
           type="text"
-          className="template-property-input"
           value={props.value || ""}
           onChange={props.onChange}
         />
       </div>
-    </div>
+    </TemplatePropertyContainer>
   );
 };
+
+const TemplatePropertyContainer = styled.div`
+  margin-bottom: 20px;
+`;
+
+const TemplatePropertyName = styled.div`
+  margin-bottom: 10px;
+`;
 
 let TemplateRelation = (props) => {
   const navigate = useNavigate();
@@ -27,12 +36,23 @@ let TemplateRelation = (props) => {
     <div className="template-property-container">
       <div className="template-property-name">{props.name}</div>
       <input type="text" />
-      <button onClick={() => props.setVisibleTemplate(navigate)}>
+      <Button onClick={() => props.setVisibleTemplate(navigate)}>
         Create New
-      </button>
+      </Button>
     </div>
   );
 };
+
+const Button = styled.button`
+  outline: none;
+  background: transparent;
+  border-radius: 3px;
+  border: 2px solid var(--dark-green);
+  color: var(--dark-green);
+  margin: 0 1em;
+  padding: 0.25em 1em;
+  cursor: pointer;
+`;
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
