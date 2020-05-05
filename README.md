@@ -14,14 +14,14 @@ TODOs:
 - [ ] Add ability to customize template by adding more properties and related nodes
 
 - [ ] Add some sort of dropbox paper functionality where you can change order of
-properties and related nodes, add notes in between
+      properties and related nodes, add notes in between
 
 - [ ] Add colloborator functionality, so see what other users are currently editing
 
 - [ ] Add deep linking for property values to refer to property values on other nodes
 
 - [ ] On creation of related node, remove the option to create again, instead add a
-placeholder with some data, and ability to 'x' it out
+      placeholder with some data, and ability to 'x' it out
 
 - [x] Persist created TemplateInstances to localstorage to avoid refresh errors
 

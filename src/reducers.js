@@ -58,5 +58,5 @@ export default combineReducers({
   templateInstancesById,
   templatesById,
   templateIds,
-  templateGraphPath
+  templateGraphPath,
 });
