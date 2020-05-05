@@ -4,3 +4,12 @@ export const createAndViewTemplateInstance = templateInstance => {
     templateInstance
   };
 };
+
+export const updatePropertyValues = (templateInstanceId, index, value) => {
+  return {
+    type: "UPDATE_PROPERTY_VALUES",
+    templateInstanceId,
+    index,
+    value
+  };
+};

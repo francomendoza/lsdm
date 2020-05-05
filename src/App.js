@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import TemplateInstanceNavigator from "./TemplateInstanceNavigator";
 import { Router } from "@reach/router";
 import TemplateSearch from "./TemplateSearch";
+import { updatePropertyValues } from "./actions/templateActions";
 
 function App(props) {
   return (
@@ -24,7 +25,11 @@ let TemplateInstanceViewer = props => {
   return (
     <div>
       <TemplateInstanceNavigator templateGraphPath={props.templateGraphPath} />
-      <Template {...props.template} templateInstance={props.templateInstance} />
+      <Template
+        {...props.template}
+        templateInstance={props.templateInstance}
+        updatePropertyValues={props.updatePropertyValues}
+      />
     </div>
   );
 };
@@ -46,6 +51,17 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-TemplateInstanceViewer = connect(mapStateToProps)(TemplateInstanceViewer);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    updatePropertyValues: (templateInstanceId, index, value) => {
+      dispatch(updatePropertyValues(templateInstanceId, index, value));
+    }
+  };
+};
+
+TemplateInstanceViewer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TemplateInstanceViewer);
 
 export default App;

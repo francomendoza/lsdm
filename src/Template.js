@@ -10,7 +10,12 @@ const TemplateProperty = props => {
     <div className="template-property-container">
       <div className="template-property-name">{props.name}</div>
       <div>
-        <input type="text" className="template-property-input" />
+        <input
+          type="text"
+          className="template-property-input"
+          value={props.value || ""}
+          onChange={props.onChange}
+        />
       </div>
     </div>
   );
@@ -44,8 +49,21 @@ const Template = props => {
       <h2>{props.name}</h2>
       <h4>Properties:</h4>
       <div>
-        {props.properties.map(property => {
-          return <TemplateProperty key={props.templateInstance.id + property.name} {...property} />;
+        {props.properties.map((property, i) => {
+          return (
+            <TemplateProperty
+              key={props.templateInstance.id + property.name}
+              {...property}
+              value={props.templateInstance.propertyValues[i]}
+              onChange={event => {
+                props.updatePropertyValues(
+                  props.templateInstance.id,
+                  i,
+                  event.target.value
+                );
+              }}
+            />
+          );
         })}
       </div>
       <h4>Related Nodes:</h4>
