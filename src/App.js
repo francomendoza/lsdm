@@ -3,7 +3,13 @@ import "./App.css";
 import Template from "./Template";
 import { connect } from "react-redux";
 import TemplateInstanceNavigator from "./TemplateInstanceNavigator";
-import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useParams,
+  useLocation,
+} from "react-router-dom";
 import TemplateSearch from "./TemplateSearch";
 import { updatePropertyValues } from "./actions/templateActions";
 
@@ -26,12 +32,35 @@ function App(props) {
   );
 }
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
+let graphPathQuery = (query) => {
+  if (query) {
+    return query.split(",");
+  } else {
+    return [];
+  }
+};
+
 let TemplateInstanceViewer = (props) => {
   let { templateInstanceId } = useParams();
+  let query = useQuery();
+
+  let graphPath = graphPathQuery(query.get("graphPath")).map((id) => {
+    let templateInstance = props.templateInstancesById[id];
+    let template = props.templatesById[templateInstance.templateId];
+    return {
+      id: id,
+      name: template.name,
+    };
+  });
+
   let templateInstance = props.templateInstancesById[templateInstanceId];
   return (
     <div>
-      <TemplateInstanceNavigator templateGraphPath={props.templateGraphPath} />
+      <TemplateInstanceNavigator templateGraphPath={graphPath} />
       <Template
         {...props.templatesById[templateInstance.templateId]}
         templateInstance={templateInstance}
@@ -45,14 +74,6 @@ const mapStateToProps = (state, ownProps) => {
   return {
     templateInstancesById: state.templateInstancesById,
     templatesById: state.templatesById,
-    templateGraphPath: state.templateGraphPath.map((templateInstanceId) => {
-      let templateInstance = state.templateInstancesById[templateInstanceId];
-      let template = state.templatesById[templateInstance.templateId];
-      return {
-        id: templateInstance.id,
-        name: template.name,
-      };
-    }),
   };
 };
 

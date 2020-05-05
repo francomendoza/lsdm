@@ -3,7 +3,7 @@ import { createAndViewTemplateInstance } from "./actions/templateActions";
 import "./Template.css";
 import { connect } from "react-redux";
 import { createTemplateInstance } from "./api/templateInstances";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Input from "./components/Input";
 
@@ -32,14 +32,28 @@ const TemplatePropertyName = styled.div`
 
 let TemplateRelation = (props) => {
   const navigate = useNavigate();
+  const { templateInstanceId } = useParams();
+  const location = useLocation();
   return (
-    <div className="template-property-container">
-      <div className="template-property-name">{props.name}</div>
-      <input type="text" />
-      <Button onClick={() => props.setVisibleTemplate(navigate)}>
+    <TemplatePropertyContainer>
+      <TemplatePropertyName>{props.name}</TemplatePropertyName>
+      <Input type="text" />
+      <Button
+        onClick={() => {
+          // 1. generate new instance
+          // 2. navigate to that instance
+          // 3. keep navigation history as breadcrumbs
+          let newTemplateInstanceId = props.setVisibleTemplate();
+          let query = `?graphPath=${templateInstanceId}`;
+          if (location.search) {
+            query = `${location.search},${templateInstanceId}`;
+          }
+          navigate(`/template_instances/${newTemplateInstanceId}${query}`);
+        }}
+      >
         Create New
       </Button>
-    </div>
+    </TemplatePropertyContainer>
   );
 };
 
@@ -56,15 +70,24 @@ const Button = styled.button`
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    setVisibleTemplate: (navigate) => {
+    setVisibleTemplate: () => {
       let templateInstance = createTemplateInstance(ownProps.templateId);
       dispatch(createAndViewTemplateInstance(templateInstance));
-      navigate(`/template_instances/${templateInstance.id}`);
+      return templateInstance.id;
     },
   };
 };
 
-TemplateRelation = connect(null, mapDispatchToProps)(TemplateRelation);
+const mapStateToProps = (state) => {
+  return {
+    graphPath: state.templateGraphPath,
+  };
+};
+
+TemplateRelation = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TemplateRelation);
 
 const Template = (props) => {
   return (

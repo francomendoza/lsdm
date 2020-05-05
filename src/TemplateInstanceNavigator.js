@@ -25,7 +25,7 @@ const TemplateInstanceNavigator = (props) => {
             <Breadcrumb
               key={node.id}
               templateInstance={node}
-              path={props.templateGraphPath.slice(0, i + 1)}
+              path={props.templateGraphPath.slice(0, i)}
             />
           );
         })}
@@ -35,13 +35,14 @@ const TemplateInstanceNavigator = (props) => {
 };
 
 const Breadcrumb = (props) => {
+  // TODO: trigger state change to graph path when back navigating
+  let query = "";
+  if (props.path.length > 0) {
+    query = `?graphPath=${props.path.map((node) => node.id).join(",")}`;
+  }
   return (
     <li>
-      <Link
-        to={`/template_instances/${
-          props.templateInstance.id
-        }?graphPath=${props.path.map((node) => node.id).join(",")}`}
-      >
+      <Link to={`/template_instances/${props.templateInstance.id}${query}`}>
         <span>{props.templateInstance.name}</span>
       </Link>
     </li>
