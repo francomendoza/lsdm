@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { createAndViewTemplateInstance } from "./actions/templateActions";
-import { createTemplateInstance } from "./api/templateInstances";
+import { createAndViewTemplateInstance } from "../actions/templateActions";
+import { createTemplateInstance } from "../api/templateInstances";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
