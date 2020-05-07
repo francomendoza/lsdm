@@ -4,8 +4,24 @@ import { createAndViewTemplateInstance } from "../actions/templateActions";
 import { createTemplateInstance } from "../api/templateInstances";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
-const TemplateSearch = (props) => {
+type TemplateSearchProps = {
+  templateIds: Array<string>;
+  templatesById: TemplatesById;
+};
+
+interface Template {
+  id: string;
+  name: string;
+}
+
+interface TemplatesById {
+  [id: string]: Template;
+}
+
+const TemplateSearch = (props: TemplateSearchProps) => {
+  const dispatch = useDispatch();
   let [query, updateQuery] = useState("");
   const navigate = useNavigate();
   return (
@@ -25,7 +41,7 @@ const TemplateSearch = (props) => {
               key={templateId}
               onClick={() => {
                 let templateInstance = createTemplateInstance(templateId);
-                props.dispatch(createAndViewTemplateInstance(templateInstance));
+                dispatch(createAndViewTemplateInstance(templateInstance));
                 navigate(`template_instances/${templateInstance.id}`);
               }}
             >
@@ -50,8 +66,12 @@ const Result = styled.div`
     border-bottom: 2px solid var(--dark-green);
   }
 `;
+interface RootState {
+  templateIds: string[];
+  templatesById: TemplatesById;
+}
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: RootState) => {
   return {
     templateIds: state.templateIds,
     templatesById: state.templatesById,
