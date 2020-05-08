@@ -66,6 +66,7 @@ const Result = styled.div`
     border-bottom: 2px solid var(--dark-green);
   }
 `;
+
 interface RootState {
   templateIds: string[];
   templatesById: TemplatesById;

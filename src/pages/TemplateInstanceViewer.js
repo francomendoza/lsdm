@@ -1,7 +1,7 @@
 import React from "react";
 import { updatePropertyValues } from "../actions/templateActions";
 import Template from "../Template";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import TemplateInstanceNavigator from "../TemplateInstanceNavigator";
 import { useParams, useLocation } from "react-router-dom";
 
@@ -20,45 +20,34 @@ let graphPathQuery = (query) => {
 let TemplateInstanceViewer = (props) => {
   let { templateInstanceId } = useParams();
   let query = useQuery();
+  const dispatch = useDispatch();
+  const templateInstancesById = useSelector(
+    (state) => state.templateInstancesById
+  );
+  const templatesById = useSelector((state) => state.templatesById);
 
   let graphPath = graphPathQuery(query.get("graphPath")).map((id) => {
-    let templateInstance = props.templateInstancesById[id];
-    let template = props.templatesById[templateInstance.templateId];
+    let templateInstance = templateInstancesById[id];
+    let template = templatesById[templateInstance.templateId];
     return {
       id: id,
       name: template.name,
     };
   });
 
-  let templateInstance = props.templateInstancesById[templateInstanceId];
+  let templateInstance = templateInstancesById[templateInstanceId];
   return (
     <div>
       <TemplateInstanceNavigator templateGraphPath={graphPath} />
       <Template
-        {...props.templatesById[templateInstance.templateId]}
+        {...templatesById[templateInstance.templateId]}
         templateInstance={templateInstance}
-        updatePropertyValues={props.updatePropertyValues}
+        updatePropertyValues={(templateInstanceId, index, value) => {
+          dispatch(updatePropertyValues(templateInstanceId, index, value));
+        }}
       />
     </div>
   );
 };
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    templateInstancesById: state.templateInstancesById,
-    templatesById: state.templatesById,
-  };
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    updatePropertyValues: (templateInstanceId, index, value) => {
-      dispatch(updatePropertyValues(templateInstanceId, index, value));
-    },
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TemplateInstanceViewer);
+export default TemplateInstanceViewer;
