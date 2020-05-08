@@ -66,6 +66,11 @@ const Button = styled.button`
   margin: 0 1em;
   padding: 0.25em 1em;
   cursor: pointer;
+  &:hover,
+  &:focus {
+    background: var(--dark-green);
+    color: #fff;
+  }
 `;
 
 const mapDispatchToProps = (dispatch, ownProps) => {
