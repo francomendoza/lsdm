@@ -5,20 +5,12 @@ import { createTemplateInstance } from "../api/templateInstances";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { TemplatesById, RootState } from "../reducers";
 
 type TemplateSearchProps = {
   templateIds: Array<string>;
   templatesById: TemplatesById;
 };
-
-interface Template {
-  id: string;
-  name: string;
-}
-
-interface TemplatesById {
-  [id: string]: Template;
-}
 
 const TemplateSearch = (props: TemplateSearchProps) => {
   const dispatch = useDispatch();
@@ -66,11 +58,6 @@ const Result = styled.div`
     border-bottom: 2px solid var(--dark-green);
   }
 `;
-
-interface RootState {
-  templateIds: string[];
-  templatesById: TemplatesById;
-}
 
 const mapStateToProps = (state: RootState) => {
   return {

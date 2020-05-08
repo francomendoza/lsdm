@@ -4,12 +4,13 @@ import Template from "../Template";
 import { useDispatch, useSelector } from "react-redux";
 import TemplateInstanceNavigator from "../TemplateInstanceNavigator";
 import { useParams, useLocation } from "react-router-dom";
+import { RootState } from "../reducers";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-let graphPathQuery = (query) => {
+let graphPathQuery = (query: string | null) => {
   if (query) {
     return query.split(",");
   } else {
@@ -17,14 +18,14 @@ let graphPathQuery = (query) => {
   }
 };
 
-let TemplateInstanceViewer = (props) => {
+let TemplateInstanceViewer = () => {
   let { templateInstanceId } = useParams();
   let query = useQuery();
   const dispatch = useDispatch();
   const templateInstancesById = useSelector(
-    (state) => state.templateInstancesById
+    (state: RootState) => state.templateInstancesById
   );
-  const templatesById = useSelector((state) => state.templatesById);
+  const templatesById = useSelector((state: RootState) => state.templatesById);
 
   let graphPath = graphPathQuery(query.get("graphPath")).map((id) => {
     let templateInstance = templateInstancesById[id];
@@ -42,7 +43,11 @@ let TemplateInstanceViewer = (props) => {
       <Template
         {...templatesById[templateInstance.templateId]}
         templateInstance={templateInstance}
-        updatePropertyValues={(templateInstanceId, index, value) => {
+        updatePropertyValues={(
+          templateInstanceId: string,
+          index: number,
+          value: string
+        ) => {
           dispatch(updatePropertyValues(templateInstanceId, index, value));
         }}
       />
