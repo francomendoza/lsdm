@@ -1,19 +1,16 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
 import { createAndViewTemplateInstance } from "../actions/templateActions";
 import { createTemplateInstance } from "../api/templateInstances";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { TemplatesById, RootState } from "../reducers";
+import { RootState } from "../reducers";
+import Input from "../components/Input";
 
-type TemplateSearchProps = {
-  templateIds: Array<string>;
-  templatesById: TemplatesById;
-};
-
-const TemplateSearch = (props: TemplateSearchProps) => {
+const TemplateSearch = () => {
   const dispatch = useDispatch();
+  const templateIds = useSelector((state: RootState) => state.templateIds);
+  const templatesById = useSelector((state: RootState) => state.templatesById);
   let [query, updateQuery] = useState("");
   const navigate = useNavigate();
   return (
@@ -23,10 +20,8 @@ const TemplateSearch = (props: TemplateSearchProps) => {
         value={query}
         onChange={(event) => updateQuery(event.target.value)}
       />
-      {props.templateIds
-        .filter((id) =>
-          props.templatesById[id].name.toLowerCase().includes(query)
-        )
+      {templateIds
+        .filter((id) => templatesById[id].name.toLowerCase().includes(query))
         .map((templateId) => {
           return (
             <Result
@@ -37,7 +32,7 @@ const TemplateSearch = (props: TemplateSearchProps) => {
                 navigate(`template_instances/${templateInstance.id}`);
               }}
             >
-              {props.templatesById[templateId].name}
+              {templatesById[templateId].name}
             </Result>
           );
         })}
@@ -45,7 +40,7 @@ const TemplateSearch = (props: TemplateSearchProps) => {
   );
 };
 
-const Search = styled.input`
+const Search = styled(Input)`
   margin: 20px 0;
   font-size: 20px;
   width: 100%;
@@ -59,11 +54,4 @@ const Result = styled.div`
   }
 `;
 
-const mapStateToProps = (state: RootState) => {
-  return {
-    templateIds: state.templateIds,
-    templatesById: state.templatesById,
-  };
-};
-
-export default connect(mapStateToProps)(TemplateSearch);
+export default TemplateSearch;
