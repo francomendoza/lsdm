@@ -36,7 +36,9 @@ const TemplateInstanceNavigator = (props) => {
 
 const BreadcrumbList = styled.ol`
   list-style-type: none;
-  padding: 0;
+  padding: 5px;
+  position: sticky;
+  top: 0px;
 `;
 
 const StyledBreadCrumb = styled.li`
