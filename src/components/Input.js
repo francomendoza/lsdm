@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const Input = styled.input`
+  margin-bottom: 10px;
   border: none;
   outline: none;
   border-bottom: 1px solid lightgrey;

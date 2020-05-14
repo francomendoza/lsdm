@@ -23,7 +23,7 @@ const TemplateRelation = (props) => {
       <Button
         onClick={() => {
           const newTemplateInstance = createTemplateInstance(props.templateId);
-          dispatch(createAndViewTemplateInstance(templateInstance));
+          dispatch(createAndViewTemplateInstance(newTemplateInstance));
 
           let query = `?graphPath=${templateInstanceId}`;
           if (location.search) {

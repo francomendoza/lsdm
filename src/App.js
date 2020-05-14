@@ -11,8 +11,8 @@ const AppContainer = styled.div`
 `;
 
 const Header = styled.header`
-  background-color: #8eb69b;
-  min-height: 5vh;
+  background-color: var(--dark-green);
+  height: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;

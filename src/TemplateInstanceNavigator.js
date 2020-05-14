@@ -80,7 +80,6 @@ const StyledLink = styled(Link)`
 `;
 
 const Breadcrumb = (props) => {
-  // TODO: trigger state change to graph path when back navigating
   let query = "";
   if (props.path.length > 0) {
     query = `?graphPath=${props.path.map((node) => node.id).join(",")}`;
