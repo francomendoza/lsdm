@@ -3,7 +3,7 @@ export function createTemplateInstance(templateId) {
     id: new Date().toISOString(),
     templateId,
     propertyValues: [],
-    relatedTemplateIds: []
+    relatedTemplateIds: [],
   };
 
   storeInSession(templateInstance);
