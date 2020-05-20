@@ -13,11 +13,27 @@ function initializeState() {
     JSON.parse(sessionStorage.getItem("templateInstancesById")) || {};
   let templatesById = {};
   let templateIds = [];
-  templates.forEach(template => {
+  const templateInstanceIdsByTemplateId = Object.keys(
+    templateInstancesById
+  ).reduce((memo, id) => {
+    const templateInstance = templateInstancesById[id];
+    if (memo[templateInstance.templateId]) {
+      memo[templateInstance.templateId].push(id);
+    } else {
+      memo[templateInstance.templateId] = [id];
+    }
+    return memo;
+  }, {});
+  templates.forEach((template) => {
     templatesById[template.id] = template;
     templateIds.push(template.id);
   });
-  return { templateInstancesById, templateIds, templatesById };
+  return {
+    templateInstancesById,
+    templateIds,
+    templatesById,
+    templateInstanceIdsByTemplateId,
+  };
 }
 
 const store = createStore(rootReducer, initializeState());

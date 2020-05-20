@@ -30,6 +30,40 @@ function templateInstancesById(
   }
 }
 
+interface TemplateInstanceIdsByTemplateId {
+  [id: string]: Array<string>;
+}
+
+function templateInstanceIdsByTemplateId(
+  state: TemplateInstanceIdsByTemplateId = {},
+  action: TemplateActionTypes
+): TemplateInstanceIdsByTemplateId {
+  switch (action.type) {
+    case NEW_TEMPLATE_INSTANCE:
+      return {
+        ...state,
+        [action.templateInstance.templateId]: templateInstanceIds(
+          state[action.templateInstance.templateId],
+          action
+        ),
+      };
+    default:
+      return state;
+  }
+}
+
+function templateInstanceIds(
+  state: Array<string> = [],
+  action: TemplateActionTypes
+) {
+  switch (action.type) {
+    case NEW_TEMPLATE_INSTANCE:
+      return [...state, action.templateInstance.id];
+    default:
+      return state;
+  }
+}
+
 const initialTemplateInstance: TemplateInstance = {
   id: "",
   templateId: "",
@@ -74,6 +108,7 @@ export default combineReducers({
   templatesById,
   templateIds,
   templateGraphPath,
+  templateInstanceIdsByTemplateId,
 });
 
 export interface RootState {
@@ -81,6 +116,7 @@ export interface RootState {
   templatesById: TemplatesById;
   templateIds: string[];
   templateGraphPath: string[];
+  templateInstanceIdsByTemplateId: TemplateInstanceIdsByTemplateId;
 }
 
 interface TemplateInstancesById {

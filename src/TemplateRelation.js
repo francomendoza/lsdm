@@ -17,6 +17,17 @@ const TemplateRelation = (props) => {
   const { templateInstanceId } = useParams();
   const location = useLocation();
   const dispatch = useDispatch();
+  const options = useSelector((state) => {
+    return (state.templateInstanceIdsByTemplateId[props.templateId] || []).map(
+      (id) => {
+        const templateInstance = state.templateInstancesById[id];
+        return {
+          value: templateInstance.propertyValues[0] || "",
+          label: templateInstance.propertyValues[0] || "",
+        };
+      }
+    );
+  });
 
   return (
     <TemplatePropertyContainer>
